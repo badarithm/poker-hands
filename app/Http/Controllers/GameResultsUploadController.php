@@ -12,11 +12,12 @@ class GameResultsUploadController extends Controller
      */
     public function show(Request $request)
     {
-        return __METHOD__;
+        return view('theme.file-upload-form');
     }
 
     public function uploadResults(Request $request)
     {
-        return __METHOD__;
+        // this does not need view
+        return redirect()->to('dashboard');
     }
 }

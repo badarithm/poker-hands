@@ -11,6 +11,6 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        return __METHOD__;
+        return view('theme.dashboard');
     }
 }
