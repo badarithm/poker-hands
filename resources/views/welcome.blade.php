@@ -85,6 +85,9 @@
                 </div>
                 <div class="links">
                     <a href="{{url('login')}}">Login</a>
+                    <a href="{{route('result-upload-form')}}">Upload File</a>
+                    <a href="{{route('result-upload-action')}}">Upload Action</a>
+                    <a href="{{route('dashboard')}}">Dashboard</a>
                 </div>
             </div>
         </div>
