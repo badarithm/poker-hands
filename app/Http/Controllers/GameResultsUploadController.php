@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FileUploadRequest;
+use App\Http\Services\FileUploadService;
 use Illuminate\Http\Request;
 
 class GameResultsUploadController extends Controller
 {
+    private $fileUploadService;
+
+    public function __construct(FileUploadService $fileUploadService)
+    {
+        $this->fileUploadService = $fileUploadService;
+    }
+
     /**
      * Show a form to upload file with results
      * @param Request $request
@@ -15,9 +24,9 @@ class GameResultsUploadController extends Controller
         return view('theme.file-upload-form');
     }
 
-    public function uploadResults(Request $request)
+    public function uploadResults(FileUploadRequest $request)
     {
-        // this does not need view
-        return redirect()->to('dashboard');
+        $this->fileUploadService($request->result_file);
+        return redirect()->to('dashboard')->with('message', 'Your file was uploaded.');
     }
 }
