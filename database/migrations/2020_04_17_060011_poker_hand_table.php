@@ -13,7 +13,7 @@ class PokerHandTable extends Migration
      */
     public function up()
     {
-        Schema::create('poeker_hand', function(Blueprint $table) {
+        Schema::create('poker_hand', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('match_id');
 //            $table->foreign('match_id')->references('id')->on('poker_match');
