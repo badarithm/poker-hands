@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Game\PokerMatch;
+use App\Models\Games\PokerHand;
 use Highlight\Mode;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -37,4 +42,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function matches(): HasMany
+    {
+        return $this->hasMany(PokerMatch::class, 'user_id', 'id');
+    }
 }
