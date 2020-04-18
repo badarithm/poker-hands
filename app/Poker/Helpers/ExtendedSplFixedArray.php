@@ -4,14 +4,15 @@
 namespace App\Poker\Helpers;
 
 use \SplFixedArray;
-use function foo\func;
 
 /**
  * Adding some methods to ease tedium
- * Class SplFixedArrayPlus
+ * With small number of items there will be no speed gain.
+ * But the nice thing is that lots of looping and transforming can be done in more fluent fashion
+ * Class ExtendedSplFixedArray
  * @package App\Poker
  */
-class SplFixedArrayPlus extends SplFixedArray
+class ExtendedSplFixedArray extends SplFixedArray
 {
     /**
      * In many cases need to access previous element and then compare to it in some way.
@@ -19,9 +20,9 @@ class SplFixedArrayPlus extends SplFixedArray
      * null values. Initially it seemed to be very handy to check distances between
      * given card ranks.
      * @param callable $handler
-     * @return SplFixedArrayPlus
+     * @return ExtendedSplFixedArray
      */
-    public function applyWithPrevious(callable $handler): SplFixedArrayPlus
+    public function applyWithPrevious(callable $handler): ExtendedSplFixedArray
     {
         if (1 < $this->count()) {
             // Copy will always be of length original - 1, because the first element is used
@@ -45,18 +46,18 @@ class SplFixedArrayPlus extends SplFixedArray
 
     /**
      * Copy of itself except the first element
-     * @return SplFixedArrayPlus
+     * @return ExtendedSplFixedArray
      */
-    public function tail(): SplFixedArrayPlus
+    public function tail(): ExtendedSplFixedArray
     {
         return $this->slice(1, $this->count() - 1);
     }
 
     /**
      * Returns a copy of itself except the last element
-     * @return SplFixedArrayPlus
+     * @return ExtendedSplFixedArray
      */
-    public function tailInverse(): SplFixedArrayPlus
+    public function tailInverse(): ExtendedSplFixedArray
     {
         return $this->slice(0, $this->count() - 1);
     }
@@ -92,7 +93,7 @@ class SplFixedArrayPlus extends SplFixedArray
      * can be calculated.
      * @param int $startIndex
      * @param int $length
-     * @return SplFixedArrayPlus
+     * @return ExtendedSplFixedArray
      */
     public function slice(int $startIndex, int $length)
     {
@@ -113,9 +114,9 @@ class SplFixedArrayPlus extends SplFixedArray
      * @param int $len
      * @param $min
      * @param $max
-     * @return SplFixedArrayPlus
+     * @return ExtendedSplFixedArray
      */
-    public static function randomFill(int $len, $min, $max) : SplFixedArrayPlus
+    public static function randomFill(int $len, $min, $max) : ExtendedSplFixedArray
     {
         $duplicate = new self($len);
         foreach ($duplicate as $key => $value) {
@@ -127,9 +128,9 @@ class SplFixedArrayPlus extends SplFixedArray
     /**
      * Cluster elements into groups using given function
      * @param callable $handler
-     * @return SplFixedArrayPlus
+     * @return ExtendedSplFixedArray
      */
-    public function cluster(callable $handler) : SplFixedArrayPlus
+    public function cluster(callable $handler) : ExtendedSplFixedArray
     {
         // TODO: still need to add this
         return $this;
