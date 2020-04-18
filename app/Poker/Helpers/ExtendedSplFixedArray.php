@@ -75,10 +75,15 @@ class ExtendedSplFixedArray extends SplFixedArray implements SplFixedArrayExtens
                 array_push($tempValues, $value);
             }
         }
-        return self::fromArray($tempValues);
+
+        $duplicate = new self(count($tempValues));
+        foreach ($tempValues as $key => $value) {
+            $duplicate[$key] = $value;
+        }
+        return $duplicate;
     }
 
-    public function map(callable $handler)
+    public function map(callable $handler): SplFixedArrayExtensionInterface
     {
         $duplicate = new self($this->count());
         foreach ($this as $key => $item) {
@@ -128,12 +133,29 @@ class ExtendedSplFixedArray extends SplFixedArray implements SplFixedArrayExtens
     /**
      * Cluster elements into groups using given function
      * Likely use case is to group cards based on their suit.
+     * This works well for small number of
      * @param callable $handler
      * @return ExtendedSplFixedArray
      */
     public function cluster(callable $handler): SplFixedArrayExtensionInterface
     {
-        // TODO: still need to add this
+        $cluster = array();
+        $duplicate = clone $this;
+        foreach ($duplicate as $firstKey => $firstValue) {
+            foreach ($duplicate as $secondKey => $secondValue) {
+                [$key, $status] = $handler($firstValue, $secondValue);
+                if ($status) {
+                   if (!array_key_exists($key, $cluster)) {
+                       $cluster[$key] = array();
+                   }
+                   array_push($cluster[$key], $secondValue);
+                   array_splice($duplicate, $secondKey, 1);
+                    // This will prevent conditions where values are skipped
+                    // because entries were removed.
+                   reset($duplicate);
+                }
+            }
+        }
         return $this;
     }
 

@@ -3,7 +3,9 @@
 
 namespace App\Poker\Helpers;
 
-
+use \Iterator;
+use \ArrayAccess;
+use \Countable;
 /**
  * Have to make it compatible with actual SplFixedArray class
  * Interface SplFixedArrayExtensionInterface
