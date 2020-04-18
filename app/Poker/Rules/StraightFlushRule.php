@@ -3,31 +3,37 @@
 
 namespace App\Poker\Rules;
 
-
-use App\Poker\Hand;
+use App\Poker\Contracts\CardInterface;
+use App\Poker\Contracts\HandInterface;
 
 /**
  * All cards have same suit, and rank decreases consequentialy by 1
  * Class StraightFlushRule
  * @package App\Poker\Rules
  */
-class StraightFlushRule implements RuleInterface
+class StraightFlushRule extends AbstractRuleClass
 {
     /**
+     * If all cards are the same suit and consequential rank
      * @param Hand $hand
      * @return bool
      */
-    public function applies(Hand $hand): bool
+    public function applies(HandInterface $hand): bool
     {
-        // TODO: Implement applies() method.
+        $cards = $hand->getCards();
+        // if suit is matching, then it has to be same as the first one
+        $match = $cards[0];
+        $matching = array_filter($cards, function(CardInterface $card) use ($match) {
+            return $card->getSuit() === $match->getsuit();
+        });
+        if (count($cards) === count($matching)) {
+
+        }
+        return false;
     }
 
-    /**
-     * @param RuleInterface $other
-     * @return int
-     */
-    public function distance(RuleInterface $other): int
+    public function weight(): int
     {
-        // TODO: Implement distance() method.
+        return 9;
     }
 }

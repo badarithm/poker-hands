@@ -6,6 +6,8 @@ namespace App\Poker;
 
 use App\Poker\Contracts\CardRankInterface;
 use App\Poker\Rules\CardInterface;
+use phpDocumentor\Reflection\Types\Static_;
+use function GuzzleHttp\Psr7\stream_for;
 
 /**
  * Need a comparable class for successive card checks, ordering on insertion where cards
@@ -39,7 +41,19 @@ class CardRank implements CardRankInterface
         }
     }
 
-    public function getRank(): int
+    public function getRank(): string
+    {
+        if (10 < $this->rank) {
+            return array_flip(static::CONVERSION_RULES)[$this->rank];
+        }
+        return (string) $this->rank;
+    }
+
+    /**
+     * Is
+     * @return int
+     */
+    public function getWeight(): int
     {
         return $this->rank;
     }
@@ -51,7 +65,7 @@ class CardRank implements CardRankInterface
      */
     public function distance(CardRankInterface $otherRank): int
     {
-        return $this->getRank() - $otherRank->getRank();
+        return $this->getWeight() - $otherRank->getWeight();
     }
 
     public function isSuccessive(CardRankInterface $otherRank): bool

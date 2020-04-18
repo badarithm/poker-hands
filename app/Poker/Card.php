@@ -9,14 +9,28 @@ use phpDocumentor\Reflection\Types\Boolean;
 
 class Card implements CardInterface
 {
+    /**
+     * Jkr, A, K, Q, J, 10 - 2
+     */
     private $rank = null;
+
+    /**
+     * H - Hearts,
+     * D - Diamonds,
+     * C - Crosses,
+     * S - Spades,
+     */
     private $suit = null;
 
-    public function __construct(string $rank, string $suit)
+    /**
+     * Likely will come in as 3C, AD, 3H, etc..
+     * Card constructor.
+     * @param string $rank
+     * @param string $suit
+     */
+    public function __construct(string $card)
     {
-        /**
-         * Jkr, A, K, Q, J, 10 - 2
-         */
+        [$rank, $suit] = explode($card);
         $this->rank = $rank;
         $this->suit = $suit;
     }

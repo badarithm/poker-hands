@@ -4,6 +4,7 @@
 namespace App\Poker\Rules;
 
 
+use App\Poker\Contracts\RuleInterface;
 use App\Poker\HandInterface;
 
 class FullHouseRule implements RuleInterface

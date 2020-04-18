@@ -5,9 +5,9 @@ namespace App\Poker\Rules;
 
 
 use App\Poker\Hand;
-use App\Poker\HandInterface;
+use App\Poker\Contracts\HandInterface;
 
-class FlushRule implements RuleInterface
+class FlushRule extends AbstractRuleClass
 {
 
     /**
@@ -19,12 +19,8 @@ class FlushRule implements RuleInterface
         // TODO: Implement applies() method.
     }
 
-    /**
-     * @param RuleInterface $other
-     * @return int
-     */
-    public function distance(RuleInterface $other): int
+    public function weight(): int
     {
-        // TODO: Implement distance() method.
+        return 0;
     }
 }
