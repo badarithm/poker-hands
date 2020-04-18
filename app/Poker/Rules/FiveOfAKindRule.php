@@ -34,23 +34,4 @@ class FiveOfAKindRule extends AbstractRuleClass
     {
         return 10;
     }
-
-    /**
-     * To calculate distances between cards in subsets.
-     * In array has only one element, sum of distances is 0, because it's a point
-     * @param SplFixedArray $cards
-     * @return int
-     */
-    protected function sum(SplFixedArray $cards): int
-    {
-        $sum = 0;
-        $previous = null;
-        foreach ($cards as $card) {
-            if (null !== $previous) {
-                $sum += $card->distance($previous);
-            }
-            $previous = $card;
-        }
-        return $sum;
-    }
 }

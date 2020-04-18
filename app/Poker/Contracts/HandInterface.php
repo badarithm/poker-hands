@@ -3,7 +3,7 @@
 
 namespace App\Poker\Contracts;
 
-use \SplFixedArray;
+use App\Poker\Helpers\SplFixedArrayExtensionInterface;
 
 interface HandInterface
 {
@@ -18,7 +18,7 @@ interface HandInterface
      * first higher card wins. Return type should be SplFixedArray<CardInterface>.
      * @return SplFixedArray
      */
-    public function getCards(): SplFixedArray;
+    public function getCards(): SplFixedArrayExtensionInterface;
 
     /**
      * To know max number of cards allowed

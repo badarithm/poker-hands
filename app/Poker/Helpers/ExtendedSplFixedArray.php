@@ -12,7 +12,7 @@ use \SplFixedArray;
  * Class ExtendedSplFixedArray
  * @package App\Poker
  */
-class ExtendedSplFixedArray extends SplFixedArray
+class ExtendedSplFixedArray extends SplFixedArray implements SplFixedArrayExtensionInterface
 {
     /**
      * In many cases need to access previous element and then compare to it in some way.
@@ -20,9 +20,9 @@ class ExtendedSplFixedArray extends SplFixedArray
      * null values. Initially it seemed to be very handy to check distances between
      * given card ranks.
      * @param callable $handler
-     * @return ExtendedSplFixedArray
+     * @return SplFixedArrayExtensionInterface
      */
-    public function applyWithPrevious(callable $handler): ExtendedSplFixedArray
+    public function applyWithPrevious(callable $handler): SplFixedArrayExtensionInterface
     {
         if (1 < $this->count()) {
             // Copy will always be of length original - 1, because the first element is used
@@ -46,18 +46,18 @@ class ExtendedSplFixedArray extends SplFixedArray
 
     /**
      * Copy of itself except the first element
-     * @return ExtendedSplFixedArray
+     * @return SplFixedArrayExtensionInterface
      */
-    public function tail(): ExtendedSplFixedArray
+    public function tail(): SplFixedArrayExtensionInterface
     {
         return $this->slice(1, $this->count() - 1);
     }
 
     /**
      * Returns a copy of itself except the last element
-     * @return ExtendedSplFixedArray
+     * @return SplFixedArrayExtensionInterface
      */
-    public function tailInverse(): ExtendedSplFixedArray
+    public function tailInverse(): SplFixedArrayExtensionInterface
     {
         return $this->slice(0, $this->count() - 1);
     }
@@ -67,7 +67,7 @@ class ExtendedSplFixedArray extends SplFixedArray
      * @param callable $handler
      * @return SplFixedArray
      */
-    public function filter(callable $handler)
+    public function filter(callable $handler): SplFixedArrayExtensionInterface
     {
         $tempValues = array();
         foreach ($this as $key => $value) {
@@ -95,7 +95,7 @@ class ExtendedSplFixedArray extends SplFixedArray
      * @param int $length
      * @return ExtendedSplFixedArray
      */
-    public function slice(int $startIndex, int $length)
+    public function slice(int $startIndex, int $length): SplFixedArrayExtensionInterface
     {
         $slice = new self(0);
         if (array_key_exists($startIndex, $this)) {
@@ -110,13 +110,13 @@ class ExtendedSplFixedArray extends SplFixedArray
     }
 
     /**
-     * There is no real use case for this method. Just to generate
+     * There is no real use case for this method. Just to generate random arrays.
      * @param int $len
      * @param $min
      * @param $max
      * @return ExtendedSplFixedArray
      */
-    public static function randomFill(int $len, $min, $max) : ExtendedSplFixedArray
+    public static function randomFill(int $len, $min, $max) : SplFixedArrayExtensionInterface
     {
         $duplicate = new self($len);
         foreach ($duplicate as $key => $value) {
@@ -127,12 +127,20 @@ class ExtendedSplFixedArray extends SplFixedArray
 
     /**
      * Cluster elements into groups using given function
+     * Likely use case is to group cards based on their suit.
      * @param callable $handler
      * @return ExtendedSplFixedArray
      */
-    public function cluster(callable $handler) : ExtendedSplFixedArray
+    public function cluster(callable $handler): SplFixedArrayExtensionInterface
     {
         // TODO: still need to add this
         return $this;
     }
+
+//    protected function sum(callable $handler): int
+//    {
+//        return $this->applyWithPrevious($handler)->reduce(function($carry, $value) {
+//            return $carry + $value;
+//        });
+//    }
 }
