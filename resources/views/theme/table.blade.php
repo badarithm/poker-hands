@@ -19,7 +19,9 @@
         <tfoot>
             <tr>
                 <td colspan="{{count($titles)}}">
-                    {{$collection->links()}}
+                    <div class="d-flex justify-content-center">
+                        {{$collection->links()}}
+                    </div>
                 </td>
             </tr>
         </tfoot>
