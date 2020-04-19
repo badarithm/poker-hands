@@ -167,4 +167,13 @@ class ExtendedSplFixedArray extends SplFixedArray implements SplFixedArrayExtens
 
         return $clusteredDuplicate;
     }
+
+    public function sum(): int
+    {
+        $sum = 0;
+        foreach($this as $value) {
+            $sum += $value;
+        }
+        return sum;
+    }
 }

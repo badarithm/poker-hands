@@ -5,6 +5,7 @@ namespace App\Poker;
 
 
 use App\Poker\Contracts\CardInterface;
+use Illuminate\Support\Facades\Log;
 
 class Card implements CardInterface
 {
@@ -29,7 +30,8 @@ class Card implements CardInterface
      */
     public function __construct(string $card)
     {
-        [$rank, $suit] = explode($card);
+        Log::debug($card);
+        [$rank, $suit] = str_split($card, 1);
         $this->rank = new CardRank($rank);
         $this->suit = $suit;
     }

@@ -16,6 +16,7 @@ use App\Poker\Rules\StraightFlushRule;
 use App\Poker\Rules\StraightRule;
 use App\Poker\Rules\ThreeOfAKindRule;
 use App\Poker\Rules\TwoPairRule;
+use Illuminate\Support\Facades\Log;
 use \SplFixedArray;
 
 /**
@@ -71,7 +72,7 @@ class Match implements MatchInterface
      */
     public function addHand(HandInterface $hand): void
     {
-        $this->hands[] = $hand;
+        array_push($this->hands, $hand);
     }
 
     /**
@@ -102,6 +103,6 @@ class Match implements MatchInterface
 
     public function resetHands(): void
     {
-        $this->hands = new SplFixedArray(static::MAX_PLAYERS);
+        $this->hands = array();
     }
 }

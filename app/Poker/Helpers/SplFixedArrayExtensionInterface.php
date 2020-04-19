@@ -76,4 +76,6 @@ interface SplFixedArrayExtensionInterface extends Iterator, ArrayAccess, Countab
      * @return static
      */
     public static function randomFill(int $length, int $min, int $max): self ;
+
+    public function sum(): int ;
 }
