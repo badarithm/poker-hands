@@ -35,7 +35,7 @@ class StartSetupCommand extends Command
     }
 
     /**
-     * Execute the console command.
+     * This is just to speed up setup for whoever is checking.
      *
      * @return mixed
      */
@@ -43,10 +43,10 @@ class StartSetupCommand extends Command
     {
         if ($this->confirm('Will create local database inside project, apply migrations and create user account. Then it will ask for port number and start local development server. Please confirm.')) {
             $this->info('Creating application key...');
-//            Artisan::call('config:create-env-file');
+            Artisan::call('create-env-file');
             Artisan::call('key:generate');
             $this->info('Will create SQLite database...');
-//            Artisan::call('database:create-local');
+            Artisan::call('create-local-database');
             $this->info('Created SQLite database.');
             $this->info('Will migrate database tables...');
             Artisan::call('migrate:fresh');
