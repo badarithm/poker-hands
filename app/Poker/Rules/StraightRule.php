@@ -4,18 +4,34 @@
 namespace App\Poker\Rules;
 
 
+use App\Poker\Contracts\CardInterface;
+use App\Poker\Contracts\HandInterface;
 use App\Poker\Contracts\RuleInterface;
-use App\Poker\HandInterface;
 
-class StraightRule implements RuleInterface
+class StraightRule extends AbstractRuleClass
 {
 
+    /**
+     * Ranks are consecutive, but has more than one suit in a set
+     * @param HandInterface $hand
+     * @return bool
+     */
     public function applies(HandInterface $hand): bool
     {
-        // TODO: Implement applies() method.
+        $numberOfConsecutiveCards = $hand->getCards()->applyWithPrevious(function(CardInterface $previous, CardInterface $current) {
+            return $current->compare($previous);
+        })->filter(function (int $distance) {
+            return 1 === $distance;
+        })->count();
+
+        $numberOfDifferentSuits = $hand->getCards()->cluster(function(CardInterface $card) {
+            return [$card->getSuit(), true];
+        })->count();
+
+        return 1 < $numberOfDifferentSuits && $numberOfConsecutiveCards === $hand->getCards()->count() - 1;
     }
 
-    public function distance(RuleInterface $other): int
+    public function weight(): int
     {
         // TODO: Implement distance() method.
     }
