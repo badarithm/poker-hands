@@ -9,6 +9,7 @@ use App\Poker\Contracts\RuleInterface;
 
 /**
  * There will be some very common methods to all rules.
+ * Used this article for reference: https://en.wikipedia.org/wiki/List_of_poker_hands
  * Class AbstractRuleClass
  * @package App\Poker\Rules
  */
