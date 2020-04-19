@@ -3,8 +3,10 @@
 
 namespace App\Poker;
 
+use App\Models\Games\PokerHand;
 use App\Poker\Contracts\CardInterface;
 use App\Poker\Contracts\HandInterface;
+use App\Poker\Helpers\SplFixedArrayExtensionInterface;
 use \SplFixedArray;
 use \Exception;
 
@@ -29,6 +31,14 @@ class Hand implements HandInterface
         $this->cards = new SplFixedArray(static::CARD_COUNT);
     }
 
+    public function generateFromDbRecord(PokerHand $hand)
+    {
+        $cards = explode(' ', $hand->cards);
+        foreach($cards as $card) {
+            $this->addCard(new Card($card));
+        }
+    }
+
     public function addCard(CardInterface $card): void
     {
         if ($this->check()) {
@@ -44,7 +54,7 @@ class Hand implements HandInterface
         }
     }
 
-    public function getCards(): SplFixedArray
+    public function getCards(): SplFixedArrayExtensionInterface
     {
         return $this->cards;
     }

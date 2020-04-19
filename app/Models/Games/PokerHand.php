@@ -3,6 +3,10 @@
 namespace App\Models\Games;
 
 use App\Models\Game\PokerMatch;
+use App\Poker\Contracts\CardInterface;
+use App\Poker\Contracts\HandInterface;
+use App\Poker\Contracts\SplFixedArray;
+use App\Poker\Helpers\SplFixedArrayExtensionInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;

@@ -4,8 +4,7 @@
 namespace App\Poker;
 
 
-use App\Poker\Rules\CardInterface;
-use phpDocumentor\Reflection\Types\Boolean;
+use App\Poker\Contracts\CardInterface;
 
 class Card implements CardInterface
 {
@@ -31,13 +30,18 @@ class Card implements CardInterface
     public function __construct(string $card)
     {
         [$rank, $suit] = explode($card);
-        $this->rank = $rank;
+        $this->rank = new CardRank($rank);
         $this->suit = $suit;
     }
 
     public function getRank(): string
     {
-        return $this->rank;
+        return $this->rank->getRank();
+    }
+
+    public function getRankNumber(): int
+    {
+        return $this->rank->getWeight();
     }
 
     public function getSuit(): string
@@ -47,7 +51,7 @@ class Card implements CardInterface
 
     public function getCard(): string
     {
-        return "{$this->rank}{$this->suit}";
+        return "{$this->rank->getRank()}{$this->suit}";
     }
 
     /**
@@ -55,9 +59,9 @@ class Card implements CardInterface
      * @param Card $card
      * @return int
      */
-    public function compareRank(CardInterface $card): int
+    public function distance(CardInterface $card): int
     {
-
+        return $this->getRankNumber() - $card->getRankNumber();
     }
 
     /**
@@ -65,13 +69,23 @@ class Card implements CardInterface
      * @param Card $card
      * @return int
      */
-    public function sameSuit(Card $card): bool
+    public function sameSuite(CardInterface $card): bool
     {
         return $card->getSuit() === $this->getSuit();
     }
 
-    public function sameRank(Card $card): bool
+    public function sameRank(CardInterface $card): bool
     {
         return $this->getRank() === $card->getRank();
+    }
+
+    public function compare(CardInterface $other): int
+    {
+        $distance = $this->distance($other);
+        if (0 === $distance) {
+            return 0;
+        } else {
+            return 0 > $distance ? -1 : 1;
+        }
     }
 }

@@ -9,6 +9,8 @@ interface CardInterface
 
     public function getRank(): string;
 
+    public function getRankNumber(): int;
+
     public function getSuit(): string;
 
     public function getCard(): string;
@@ -21,7 +23,7 @@ interface CardInterface
      * In a nutshell current rank + distance = rank of another card.
      * @return int
      */
-    public function distance(): int;
+    public function distance(CardInterface $other): int;
 
     /**
      * Returns -1, 0, 1. To be used in order methods when adding to a hand
