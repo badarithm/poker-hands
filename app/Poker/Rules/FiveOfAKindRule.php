@@ -37,4 +37,15 @@ class FiveOfAKindRule extends AbstractRuleClass
     {
         return 10;
     }
+
+    public function resolve(HandInterface $firstHand, HandInterface $secondHand): ?HandInterface
+    {
+        if ($this->applies($firstHand)) {
+            return $firstHand;
+        } elseif ($this->applies($secondHand)) {
+            return $secondHand;
+        } else {
+            null;
+        }
+    }
 }

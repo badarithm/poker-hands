@@ -17,12 +17,13 @@ interface RuleInterface
 
     /**
      * When the one rule applies to both hands, there is a list of rules
-     * how winner should be determined.
+     * how winner should be determined. Null is returned in cases where
+     * rules does not apply in either case.
      * @param \App\Poker\Contracts\HandInterface $firstHand
      * @param \App\Poker\Contracts\HandInterface $secondHand
      * @return \App\Poker\Contracts\HandInterface
      */
-    public function resolve(HandInterface $firstHand, HandInterface $secondHand): HandInterface;
+    public function resolve(HandInterface $firstHand, HandInterface $secondHand): ?HandInterface;
 
     /**
      * To determine which rule has a higher precedence.
