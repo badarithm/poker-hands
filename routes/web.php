@@ -20,7 +20,6 @@ Route::get('/', function () {
 Route::group(['prefix' => 'auth'], function() {
    Route::post('login', 'AuthController@login')->name('login-action');
    Route::get('login', 'AuthController@show')->name('login');
-
    Route::match(['get', 'post'], 'logout', 'AuthController@logout')->name('logout');
 });
 
