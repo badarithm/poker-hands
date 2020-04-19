@@ -35,7 +35,7 @@ class RoyalFlushRule extends AbstractRuleClass
             return $card->getRankNumber();
         })->sum();
 
-        return $totalWeight === 60 && 4 === $consecutiveCards && 1 === $sameCardClusters;
+        return 60 === $totalWeight && 4 === $consecutiveCards && 1 === $sameCardClusters;
     }
 
     public function weight(): int
