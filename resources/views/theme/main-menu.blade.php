@@ -15,7 +15,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <div class="btn btn-light">
-                        Victories <span class="badge badge-danger">4</span>
+                        Victories <span class="badge badge-danger">{{auth()->user()->victories_count}}</span>
                     </div>
                 </li>
             </ul>
