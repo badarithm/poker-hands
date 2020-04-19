@@ -18,13 +18,13 @@ class FileUploadService
     /**
      * Service has only one method anyway
      */
-    public function __invoke(UploadedFile $file): bool
+    public function uploadFile(UploadedFile $file): bool
     {
         if (file_exists($file->getRealPath())) {
             $fileHandle = fopen($file->getRealPath(), 'r');
             while(true) {
                 $match = fgets($fileHandle);
-                // would have to compare strings + bools
+                // have to compare strings + bools at this point
                 if ($match) {
                     // $match string contains 10 cards
                     $cards = explode(' ', $match);
@@ -34,9 +34,6 @@ class FileUploadService
 
                     $hands = array_chunk($cards, 5);
 
-                    Log::debug(implode(' ', $hands[0]));
-                    Log::debug(implode(' ', $hands[1]));
-
                     $match = PokerMatch::create([
                         'user_id' => 1,
                     ]);
@@ -45,6 +42,7 @@ class FileUploadService
                         $match->hands()->create([
                             'cards' => implode(' ', $hand),
                             'belongs_to_user' => 0 === $key ? 1 : 0,
+                            'is_winner' => 0,
                         ]);
                     }
                 } else {

@@ -15,12 +15,14 @@ class PokerMatch extends Model
 
     protected $table = 'poker_match';
 
+    protected $fillable = ['user_id'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id', 'user_id');
     }
 
-    public function matches(): HasMany
+    public function hands(): HasMany
     {
         return $this->hasMany(PokerHand::class, 'match_id', 'id');
     }

@@ -26,7 +26,7 @@ class GameResultsUploadController extends Controller
 
     public function uploadResults(FileUploadRequest $request)
     {
-        $this->fileUploadService($request->result_file);
+        $this->fileUploadService->uploadFile($request->result_file);
         return redirect()->to('dashboard')->with('message', 'Your file was uploaded.');
     }
 }
