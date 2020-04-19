@@ -13,7 +13,7 @@ class PokerHand extends Model
 
     protected $table = 'poker_hand';
 
-    protected $fillable = ['cards', 'belongs_to_user', 'is_winner'];
+    protected $fillable = ['match_id', 'cards', 'belongs_to_user', 'is_winner'];
 
     public function match(): BelongsTo
     {

@@ -2,34 +2,22 @@
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+            @foreach($titles as $title => $field)
+                <th scope="col">{{$title}}</th>
+            @endforeach
             </tr>
         </thead>
         <tbody>
+        @foreach($collection as $record)
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                @foreach($titles as $fieldName)
+                <th>{{$record[$fieldName]}}</th>
+                @endforeach
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-            </tr>
+        @endforeach
         </tbody>
         <tfoot>
-            <!-- TODO: Add pagination once populated.-->
+            {{$collection->links()}}
         </tfoot>
     </table>
 </div>

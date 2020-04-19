@@ -26,4 +26,58 @@ class PokerMatch extends Model
     {
         return $this->hasMany(PokerHand::class, 'match_id', 'id');
     }
+
+    public function playerHand(): HasMany
+    {
+        return $this->hands()->where('belongs_to_user', 1);
+    }
+
+    public function opponentHand(): HasMany
+    {
+        return $this->hands()->where('belongs_to_user', 0);
+    }
+
+    public function winningHand(): HasMany
+    {
+        return $this->hands()->where('is_winner', 1);
+    }
+
+    // Adding some magic getters to show results in the dashboard page
+
+    /**
+     * @return string
+     */
+    public function getMatchIdAttribute(): string
+    {
+        return base_convert($this->id, 10, 36);
+    }
+
+    public function getPlayerCardsAttribute(): ?string
+    {
+        if ($this->playerHand->isNotEmpty()) {
+            return $this->playerHand->first()->cards;
+        }
+        return null;
+    }
+
+    public function getOpponentCardsAttribute(): ?string
+    {
+        if ($this->opponentHand->isNotEmpty()) {
+            return $this->opponentHand->first()->cards;
+        }
+        return null;
+    }
+
+    public function getWinnerAttribute(): ?string
+    {
+        if ($this->winningHand->isNotEmpty()) {
+            if (1 === $this->winningHand->first()->user_id) {
+                return 'Player';
+            } else {
+                return 'Opponent';
+            }
+        }
+
+        return 'No Winners';
+    }
 }

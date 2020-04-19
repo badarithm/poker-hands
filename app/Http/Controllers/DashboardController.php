@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game\PokerMatch;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -11,6 +12,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        return view('theme.dashboard');
+        $pokerGames = PokerMatch::where('user_id', 1)->paginate(35);
+        return view('theme.dashboard', compact('pokerGames'));
     }
 }
