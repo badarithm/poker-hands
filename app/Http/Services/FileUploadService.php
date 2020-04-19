@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Game\PokerMatch;
+use App\Poker\Contracts\Match;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -15,6 +16,14 @@ use \Exception;
  */
 class FileUploadService
 {
+
+    protected $matchMaker = null;
+
+    public function __construct(Match $matchMaker)
+    {
+        $this->matchMaker = $matchMaker;
+    }
+
     /**
      * Service has only one method anyway
      */
@@ -45,6 +54,19 @@ class FileUploadService
                             'is_winner' => 0,
                         ]);
                     }
+
+                    // now select winner
+                    $match->load('hands');
+                    foreach ($match->hands as $hand) {
+                        $this->matchMaker->addHand($hand);
+                    }
+
+                    $winner = $this->matchMaker->pickWinningHand();
+                    if (null !== $winner) {
+                        $winner->update(['is_winner' => 1]);
+                    }
+                    $this->matchMaker->resetHands();
+
                 } else {
                     break;
                 }

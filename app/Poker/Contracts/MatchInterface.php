@@ -21,4 +21,9 @@ interface MatchInterface
      * @return HandInterface
      */
     public function pickWinningHand(): HandInterface;
+
+    /**
+     * Set added values to their initial state
+     */
+    public function resetHands(): void;
 }

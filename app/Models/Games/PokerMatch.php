@@ -4,12 +4,14 @@ namespace App\Models\Game;
 
 use App\Models\Games\PokerHand;
 use App\Models\User;
+use App\Poker\Contracts\HandInterface;
+use App\Poker\Contracts\MatchInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PokerMatch extends Model
+class PokerMatch extends Model implements MatchInterface
 {
     use SoftDeletes;
 

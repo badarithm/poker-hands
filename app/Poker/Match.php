@@ -3,6 +3,7 @@
 
 namespace App\Poker\Contracts;
 
+use App\Poker\Helpers\ExtendedSplFixedArray;
 use App\Poker\Rules\FiveOfAKindRule;
 use App\Poker\Rules\FlushRule;
 use App\Poker\Rules\FourOfAKindRule;
@@ -49,7 +50,7 @@ class Match implements MatchInterface
      */
     public function __construct()
     {
-        $this->hands = new SplFixedArray(static::MAX_PLAYERS);
+        $this->resetHands();
         $this->initiateRules();
     }
 
@@ -95,5 +96,10 @@ class Match implements MatchInterface
                 return $this->hands[1];
             }
         }
+    }
+
+    public function resetHands(): void
+    {
+        $this->hands = new SplFixedArray(static::MAX_PLAYERS);
     }
 }
