@@ -21,15 +21,21 @@ class StraightFlushRule extends AbstractRuleClass
     public function applies(HandInterface $hand): bool
     {
         $cards = $hand->getCards();
+        $expectedLength = $cards->count() - 1;
         // if suit is matching, then it has to be same as the first one
-        $match = $cards[0];
-        $matching = array_filter($cards, function(CardInterface $card) use ($match) {
-            return $card->getSuit() === $match->getsuit();
-        });
-        if (count($cards) === count($matching)) {
+        $suitsMatch = $cards->applyWithPrevious(function(CardInterface $previous, CardInterface $current) {
+          return $previous->getSuit() === $current->getSuit();
+        })->filter(function(bool $match) {
+            return $match;
+        })->count() === $expectedLength;
 
-        }
-        return false;
+        $ranksAreConsecutive = $cards->applyWithPrevious(function(CardInterface $previous, CardInterface $current) {
+          return $current->compare($previous);
+        })->filter(function(int $distance) {
+            return -1 === $distance;
+        })->count() === $expectedLength;
+
+        return $suitsMatch && $ranksAreConsecutive;
     }
 
     public function weight(): int
