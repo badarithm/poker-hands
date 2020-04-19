@@ -32,9 +32,7 @@ class ExtendedSplFixedArray extends SplFixedArray implements SplFixedArrayExtens
             $previous = null;
             foreach ($this as $key => $current) {
                 if (null !== $previous) {
-                    $processedCollection[$key - 1] = function($current) use ($previous, $handler) {
-                        return $handler($previous, $current);
-                    };
+                    $processedCollection[$key - 1] = $handler($previous, $current);
                 }
                 $previous = $current;
             }
