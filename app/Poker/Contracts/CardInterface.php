@@ -21,6 +21,7 @@ interface CardInterface
      * means lower card, positive distance means
      * the other card is higher.
      * In a nutshell current rank + distance = rank of another card.
+     * @param CardInterface $other
      * @return int
      */
     public function distance(CardInterface $other): int;

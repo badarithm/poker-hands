@@ -174,6 +174,6 @@ class ExtendedSplFixedArray extends SplFixedArray implements SplFixedArrayExtens
         foreach($this as $value) {
             $sum += $value;
         }
-        return sum;
+        return $sum;
     }
 }

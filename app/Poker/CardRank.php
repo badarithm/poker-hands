@@ -18,6 +18,7 @@ use function GuzzleHttp\Psr7\stream_for;
 class CardRank implements CardRankInterface
 {
     const CONVERSION_RULES = array(
+        'T' => 10,
         'J' => 11,
         'Q' => 12,
         'K' => 13,

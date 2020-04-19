@@ -12,12 +12,13 @@ use App\Poker\Helpers\SplFixedArrayExtensionInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
 class PokerHand extends Model implements HandInterface
 {
     use SoftDeletes;
 
-    protected $cards = null;
+    protected $cardsInstances = null;
 
     protected $table = 'poker_hand';
 
@@ -35,15 +36,16 @@ class PokerHand extends Model implements HandInterface
 
     public function getCards(): SplFixedArrayExtensionInterface
     {
-        if (null === $this->cards) {
-            $cards = explode(' ', $this->cards);
+        if (null === $this->cardsInstances) {
+            $cards = explode(' ', trim($this->cards));
+            Log::debug(implode(' | ', $cards));
             $cardArray = new ExtendedSplFixedArray(count($cards));
             foreach($cards as $key => $card) {
                 $cardArray[$key] = new Card($card);
             }
-            $this->cards = $cardArray;
+            $this->cardsInstances = $cardArray;
         }
-        return $this->cards;
+        return $this->cardsInstances;
     }
 
     public function max(): int

@@ -30,7 +30,6 @@ class Card implements CardInterface
      */
     public function __construct(string $card)
     {
-        Log::debug($card);
         [$rank, $suit] = str_split($card, 1);
         $this->rank = new CardRank($rank);
         $this->suit = $suit;

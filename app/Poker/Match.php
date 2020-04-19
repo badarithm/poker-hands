@@ -12,6 +12,7 @@ use App\Poker\Rules\FourOfAKindRule;
 use App\Poker\Rules\FullHouseRule;
 use App\Poker\Rules\HighCardRule;
 use App\Poker\Rules\OnePairRule;
+use App\Poker\Rules\RoyalFlushRule;
 use App\Poker\Rules\StraightFlushRule;
 use App\Poker\Rules\StraightRule;
 use App\Poker\Rules\ThreeOfAKindRule;
@@ -30,7 +31,7 @@ class Match implements MatchInterface
 
     private $applicableRules = array(
         FlushRule::class,
-        FiveOfAKindRule::class,
+        RoyalFlushRule::class,
         FourOfAKindRule::class,
         FullHouseRule::class,
         HighCardRule::class,
@@ -92,7 +93,7 @@ class Match implements MatchInterface
             });
 
             if (1 < $numberOfWinners) {
-                return $ruleInstance->resolve($playerStatus[0], $playerStatus[1]);
+                return $ruleInstance->resolve($this->hands[0], $this->hands[1]);
             } elseif ($playerStatus[0]) {
                 return $this->hands[0];
             } elseif ($this->hands[1]){

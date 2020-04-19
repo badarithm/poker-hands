@@ -6,8 +6,9 @@ namespace App\Poker\Rules;
 
 use App\Poker\Contracts\CardInterface;
 use App\Poker\Contracts\HandInterface;
+use Illuminate\Support\Facades\Log;
 
-class RoyalFlush extends AbstractRuleClass
+class RoyalFlushRule extends AbstractRuleClass
 {
     /**
      * Royal flush
@@ -25,7 +26,8 @@ class RoyalFlush extends AbstractRuleClass
 
         $consecutiveCards = $cards->applyWithPrevious(function(CardInterface $previous, CardInterface $current) {
             return $current->distance($previous);
-        })->filter(function(int $dist) {
+        })->filter(function($dist) {
+            Log::debug(get_class($dist));
             return -1 !== $dist;
         })->count();
 
