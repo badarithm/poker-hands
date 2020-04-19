@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-striped border">
         <thead class="thead-dark">
             <tr>
             @foreach($titles as $title => $field)
@@ -18,7 +18,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <td>
+                <td colspan="{{count($titles)}}">
                     {{$collection->links()}}
                 </td>
             </tr>
