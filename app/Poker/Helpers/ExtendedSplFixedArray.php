@@ -140,29 +140,31 @@ class ExtendedSplFixedArray extends SplFixedArray implements SplFixedArrayExtens
     public function cluster(callable $handler): SplFixedArrayExtensionInterface
     {
         $cluster = array();
-        $duplicate = clone $this;
-        foreach ($duplicate as $firstKey => $firstValue) {
-            foreach ($duplicate as $secondKey => $secondValue) {
-                [$key, $status] = $handler($firstValue, $secondValue);
-                if ($status) {
-                   if (!array_key_exists($key, $cluster)) {
-                       $cluster[$key] = array();
-                   }
-                   array_push($cluster[$key], $secondValue);
-                   array_splice($duplicate, $secondKey, 1);
-                    // This will prevent conditions where values are skipped
-                    // because entries were removed.
-                   reset($duplicate);
+        foreach ($this as $key => $value) {
+            // For cards status will always be true. Only key is
+            // a meaningful indicator how cards should be handled.
+            [$clusterKey, $status] = $handler($value);
+            if ($status) {
+                if (!array_key_exists($clusterKey, $cluster)) {
+                    $cluster[$clusterKey] = array();
                 }
+                $cluster[$clusterKey][] = $value;
             }
         }
-        return $this;
-    }
 
-//    protected function sum(callable $handler): int
-//    {
-//        return $this->applyWithPrevious($handler)->reduce(function($carry, $value) {
-//            return $carry + $value;
-//        });
-//    }
+        // have to rework cluster prior return
+        $clusteredDuplicate = new self(count($cluster));
+        // since returned key can be anything, likely a string
+        $currentClusterKey = 0;
+        foreach ($cluster as $clusterKey => $clusterValues) {
+            $clusteredDuplicate[$currentClusterKey] = new self(count($clusterValues));
+            // It uses array without keys internally, so this should be safe
+            foreach ($clusterValues as $key => $value) {
+                $clusteredDuplicate[$currentClusterKey][$key] = $value;
+            }
+            $currentClusterKey += 1;
+        }
+
+        return $clusteredDuplicate;
+    }
 }
