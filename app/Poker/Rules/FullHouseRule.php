@@ -31,7 +31,7 @@ class FullHouseRule extends AbstractRuleClass
             })->count();
     }
 
-    return function weight(): int
+    public function weight(): int
     {
         return 7;
     }
