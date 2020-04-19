@@ -39,13 +39,19 @@ class PokerHand extends Model implements HandInterface
         if (null === $this->cardsInstances) {
             $cards = explode(' ', trim($this->cards));
             $cardArray = new ExtendedSplFixedArray(count($cards));
+
             foreach($cards as $key => $card) {
-                $cardArray[$key] = new Card($card);
+                $cards[$key] = new Card($card);
             }
-            $this->cardsInstances = $cardArray;
-            usort($this->cardsInstances, function(CardInterface $first, CardInterface $second) {
+            usort($cards, function(CardInterface $first, CardInterface $second) {
                 return $first->compare($second);
             });
+
+            foreach ($cards as $key => $card) {
+                $cardArray[$key] = $card;
+            }
+
+            $this->cardsInstances = $cardArray;
         }
         return $this->cardsInstances;
     }
