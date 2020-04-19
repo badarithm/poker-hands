@@ -4,21 +4,21 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class start-setup extends Command
+class StartSetupCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'start:setup';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Will help to setup all required parts.';
 
     /**
      * Create a new command instance.
@@ -37,6 +37,7 @@ class start-setup extends Command
      */
     public function handle()
     {
-        //
+        $this->confirm('Please confirm that you want to actually apply these changes.');
+
     }
 }
