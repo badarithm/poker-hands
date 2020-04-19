@@ -10,8 +10,13 @@ Main functions:
 </ul>
 
 ## Installation instructions
-Repository already contains base framework installation / file structure.
+Repository already contains basic framework installation / file structure (except vendor, of course).
 Once pulled, have to execute <code>composer install</code>.
+Once that is done, execute <code>php artisan start:setup</code>. It will create local config files, db, ask for default 
+user info and eventually will start the development server.
+
+Additionally, development server can be accessed by executing <code>php artisan serve --port=9000</code> (assuming that port 9000 is
+available).
 
 ## License
 
