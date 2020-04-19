@@ -4,11 +4,12 @@
 namespace App\Poker\Rules;
 
 
+use App\Poker\Contracts\CardInterface;
+use App\Poker\Contracts\HandInterface;
 use App\Poker\Contracts\RuleInterface;
-use App\Poker\Hand;
-use App\Poker\HandInterface;
+use App\Poker\Helpers\SplFixedArrayExtensionInterface;
 
-class FourOfAKindRule implements RuleInterface
+class FourOfAKindRule extends AbstractRuleClass
 {
     /**
      * @param Hand $hand
@@ -16,15 +17,16 @@ class FourOfAKindRule implements RuleInterface
      */
     public function applies(HandInterface $hand): bool
     {
-        // TODO: Implement applies() method.
+        return 2 === $hand->getCards()->cluster(function(CardInterface $card) {
+           return array($card->getRank(), true);
+        })->filter(function(SplFixedArrayExtensionInterface $cluster) {
+            $length = $cluster->count();
+            return 1 === $length || 4 === $length;
+        })->count();
     }
 
-    /**
-     * @param RuleInterface $other
-     * @return int
-     */
-    public function distance(RuleInterface $other): int
+    public function weight(): int
     {
-        // TODO: Implement distance() method.
+        return 9;
     }
 }

@@ -7,6 +7,7 @@ namespace App\Poker\Rules;
 use App\Poker\Contracts\CardInterface;
 use App\Poker\Contracts\RuleInterface;
 use App\Poker\Contracts\HandInterface;
+use App\Poker\Helpers\SplFixedArrayExtensionInterface;
 use \SplFixedArray;
 /**
  * Applies when four cards have the same weight or four and the wild card
@@ -20,14 +21,16 @@ class FiveOfAKindRule extends AbstractRuleClass
 
     /**
      * Tail of original or it's inverse must have distances of 0
+     * Will take first four and last four items (again, assuming here that collection
+     * in question is already ordered.
      * @inheritDoc
      */
     public function applies(HandInterface $hand): bool
     {
-        $excerptLength = $hand->max() - 1;
-        $tail = array_slice($hand->getCards(),1, $excerptLength);
-        $inverseTail = array_slice($hand->getCards(), 0, $excerptLength);
-        return (0 === $this->sum($tail)) || (0 === $this->sum($inverseTail));
+        $tail = $hand->getCards()->tail();
+        $tailInverse = $hand->getCards()->tailInverse();
+        // if either one of them
+        $ruleApplies = false;
     }
 
     public function weight(): int
