@@ -12,7 +12,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $pokerGames = PokerMatch::where('user_id', 1)->paginate(35);
+        $pokerGames = PokerMatch::where('user_id', auth()->user()->id)->paginate(35);
         return view('theme.dashboard', compact('pokerGames'));
     }
 }

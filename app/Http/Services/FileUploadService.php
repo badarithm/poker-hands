@@ -35,7 +35,7 @@ class FileUploadService
                     $hands = array_chunk($cards, 5);
 
                     $match = PokerMatch::create([
-                        'user_id' => 1,
+                        'user_id' => auth()->user()->id,
                     ]);
 
                     foreach ($hands as $key => $hand) {
