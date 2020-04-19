@@ -17,7 +17,11 @@
         @endforeach
         </tbody>
         <tfoot>
-            {{$collection->links()}}
+            <tr>
+                <td>
+                    {{$collection->links()}}
+                </td>
+            </tr>
         </tfoot>
     </table>
 </div>
