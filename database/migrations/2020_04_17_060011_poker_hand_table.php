@@ -15,7 +15,7 @@ class PokerHandTable extends Migration
     {
         Schema::create('poker_hand', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('match_id');
+            $table->integer('match_id')->index();
 //            $table->foreign('match_id')->references('id')->on('poker_match');
             $table->tinyInteger('belongs_to_user')->index()->default(0);
             $table->tinyInteger('is_winner')->index()->default(0);

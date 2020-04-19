@@ -15,7 +15,7 @@ class UserMatchesTable extends Migration
     {
         Schema::create('poker_match', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->index();
 //            $table->foreign('user_id')->refereṇces('id')->on('users');
             $table->dateTime('created_at')->nullable();
             $table->dateTime('updated_at')->nullable();
