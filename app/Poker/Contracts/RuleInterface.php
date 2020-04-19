@@ -16,6 +16,15 @@ interface RuleInterface
     public function applies(HandInterface $hand): bool;
 
     /**
+     * When the one rule applies to both hands, there is a list of rules
+     * how winner should be determined.
+     * @param \App\Poker\Contracts\HandInterface $firstHand
+     * @param \App\Poker\Contracts\HandInterface $secondHand
+     * @return \App\Poker\Contracts\HandInterface
+     */
+    public function resolve(HandInterface $firstHand, HandInterface $secondHand): HandInterface;
+
+    /**
      * To determine which rule has a higher precedence.
      * Likely weight is already enough for comparison.
      * @param RuleInterface $other

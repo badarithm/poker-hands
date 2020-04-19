@@ -4,6 +4,7 @@
 namespace App\Poker\Rules;
 
 
+use App\Poker\Contracts\HandInterface;
 use App\Poker\Contracts\RuleInterface;
 
 /**
@@ -25,5 +26,17 @@ abstract class AbstractRuleClass implements RuleInterface
     public function distance(RuleInterface $other): int
     {
         return $this->weight() - $other->weight();
+    }
+
+    /**
+     * Placeholder function for now
+     * @param HandInterface $firstHand
+     * @param HandInterface $secondHand
+     * @return HandInterface
+     */
+    public function resolve(HandInterface $firstHand, HandInterface $secondHand): HandInterface
+    {
+        // TODO: Implement resolve() method.
+        return $secondHand;
     }
 }
