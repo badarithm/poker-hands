@@ -4,18 +4,33 @@
 namespace App\Poker\Rules;
 
 
-use App\Poker\Contracts\RuleInterface;
-use App\Poker\HandInterface;
 
-class OnePairRule implements RuleInterface
+use App\Poker\Contracts\CardInterface;
+use App\Poker\Contracts\HandInterface;
+use App\Poker\Helpers\SplFixedArrayExtensionInterface;
+
+class OnePairRule extends AbstractRuleClass
 {
 
+    /**
+     * Group cards by rank, there should be only two cards matching
+     * @param HandInterface $hand
+     * @return bool
+     */
     public function applies(HandInterface $hand): bool
     {
-        // TODO: Implement applies() method.
+        $cluster = $hand->getCards()->cluster(function(CardInterface $card) {
+            return array($card->getRank(), true);
+        });
+
+        return 4 === $cluster->count() && 4 === $cluster->filter(function(SplFixedArrayExtensionInterface $collection) {
+                $length = $collection->count();
+                return 1 === $length || 2 === $length;
+            })->count();
+
     }
 
-    public function distance(RuleInterface $other): int
+    public function weight(): int
     {
         // TODO: Implement distance() method.
     }
