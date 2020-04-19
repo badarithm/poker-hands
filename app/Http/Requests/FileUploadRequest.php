@@ -24,7 +24,7 @@ class FileUploadRequest extends FormRequest
     public function rules()
     {
         return [
-          'result_file' => 'nullable|file|max:512|mimes:txt'
+          'result_file' => 'required|file|max:512|mimes:txt'
         ];
     }
 }
