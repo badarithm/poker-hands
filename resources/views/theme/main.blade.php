@@ -19,8 +19,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
-                        @yield('content')
+                    <div class="col-sm-10 offset-sm-1 col-md-10 offset-md-1">
+                        <div class="card">
+                            <div class="card-body">
+                                @yield('content')
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

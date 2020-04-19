@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\LogoutRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,8 +24,9 @@ class AuthController extends Controller
         return view('theme.login');
     }
 
-    public function logout()
+    public function logout(LogoutRequest $request)
     {
-
+        Auth::logout();
+        return redirect()->to('/');
     }
 }
