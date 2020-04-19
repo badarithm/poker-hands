@@ -43,12 +43,9 @@ class Hand implements HandInterface
     {
         if ($this->check()) {
             array_push($this->cards, $card);
-            usort($this->cards, new class {
-                public final function __invoke(CardInterface $first, CardInterface $second)
-                {
-                    return $first->getRank() < $second->getRank() ? -1 : 1;
-                }
-            });
+            usort($this->cards, function(CardInterface $first, CardInterface $second){
+                    return $first->compare($second);
+                });
         } else {
             throw new Exception("Cannot exeed max allowed number of cards: {self::CARD_COUNT}");
         }
