@@ -35,7 +35,7 @@ abstract class AbstractRuleClass implements RuleInterface
      * @param HandInterface $secondHand
      * @return HandInterface
      */
-    public function resolve(HandInterface $firstHand, HandInterface $secondHand): HandInterface
+    public function resolve(HandInterface $firstHand, HandInterface $secondHand): ?HandInterface
     {
         // TODO: Implement resolve() method.
         return $secondHand;

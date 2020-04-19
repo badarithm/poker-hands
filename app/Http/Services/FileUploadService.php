@@ -3,7 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Game\PokerMatch;
-use App\Poker\Contracts\Match;
+use App\Poker\Match;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;

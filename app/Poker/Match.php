@@ -1,8 +1,10 @@
 <?php
 
 
-namespace App\Poker\Contracts;
+namespace App\Poker;
 
+use App\Poker\Contracts\HandInterface;
+use App\Poker\Contracts\MatchInterface;
 use App\Poker\Helpers\ExtendedSplFixedArray;
 use App\Poker\Rules\FiveOfAKindRule;
 use App\Poker\Rules\FlushRule;

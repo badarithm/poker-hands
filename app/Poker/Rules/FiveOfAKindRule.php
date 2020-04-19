@@ -45,7 +45,7 @@ class FiveOfAKindRule extends AbstractRuleClass
         } elseif ($this->applies($secondHand)) {
             return $secondHand;
         } else {
-            null;
+            return null;
         }
     }
 }
