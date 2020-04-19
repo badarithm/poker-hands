@@ -25,6 +25,6 @@ class TwoPairRule extends AbstractRuleClass
 
     public function weight(): int
     {
-        return 0;
+        return 3;
     }
 }

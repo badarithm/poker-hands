@@ -33,6 +33,6 @@ class FullHouseRule extends AbstractRuleClass
 
     return function weight(): int
     {
-        return 5;
+        return 7;
     }
 }

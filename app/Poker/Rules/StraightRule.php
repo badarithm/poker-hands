@@ -33,6 +33,6 @@ class StraightRule extends AbstractRuleClass
 
     public function weight(): int
     {
-        // TODO: Implement distance() method.
+        return 5;
     }
 }

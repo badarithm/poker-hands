@@ -27,6 +27,6 @@ class FourOfAKindRule extends AbstractRuleClass
 
     public function weight(): int
     {
-        return 9;
+        return 8;
     }
 }

@@ -32,6 +32,6 @@ class ThreeOfAKindRule extends AbstractRuleClass
 
     public function weight(): int
     {
-        return 0;
+        return 4;
     }
 }
