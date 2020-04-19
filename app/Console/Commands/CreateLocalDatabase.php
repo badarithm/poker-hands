@@ -39,7 +39,7 @@ class CreateLocalDatabase extends Command
     {
         $dbFilePath = database_path('database.sqlite');
         if (!file_exists($dbFilePath)) {
-            $handle = fopen($dbFilePath, 'r+');
+            $handle = fopen($dbFilePath, 'w+');
             fclose($handle);
         }
         return 0;
