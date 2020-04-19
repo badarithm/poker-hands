@@ -27,7 +27,6 @@ class RoyalFlushRule extends AbstractRuleClass
         $consecutiveCards = $cards->applyWithPrevious(function(CardInterface $previous, CardInterface $current) {
             return $current->distance($previous);
         })->filter(function($dist) {
-            Log::debug(get_class($dist));
             return -1 !== $dist;
         })->count();
 
