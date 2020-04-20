@@ -19,9 +19,9 @@ class StraightRule extends AbstractRuleClass
     public function applies(HandInterface $hand): bool
     {
         $numberOfConsecutiveCards = $hand->getCards()->applyWithPrevious(function(CardInterface $previous, CardInterface $current) {
-            return $current->compare($previous);
+            return $current->distance($previous);
         })->filter(function (int $distance) {
-            return 1 === $distance;
+            return -1 === $distance;
         })->count();
 
         $numberOfDifferentSuits = $hand->getCards()->cluster(function(CardInterface $card) {

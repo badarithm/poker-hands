@@ -29,7 +29,7 @@ class HighCardRule extends AbstractRuleClass
            return $current->compare($previous);
         })->filter(function (int $distance) {
             return 1 === $distance || 0 === $distance;
-        });
+        })->count();
 
         // There are no pairs and not all are consecutive
         return $originalLength === $clusteredCards->count() && $consecutiveLength < $originalLength -1;

@@ -17,7 +17,7 @@ class FlushRule extends AbstractRuleClass
      */
     public function applies(HandInterface $hand): bool
     {
-        $expectedLength = $hand->getCards() - 1;
+        $expectedLength = $hand->getCards()->count() - 1;
         return $expectedLength === $hand->getCards()->applyWithPrevious(function(CardInterface $previous, CardInterface $currrent) {
                 return $previous->getSuit() === $currrent->getSuit();
             })->filter(function(bool $result) {

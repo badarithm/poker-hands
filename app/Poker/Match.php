@@ -79,27 +79,57 @@ class Match implements MatchInterface
     /**
      * @return HandInterface
      */
-    public function pickWinningHand(): HandInterface
+    public function pickWinningHand(): ?HandInterface
     {
+        // Initiate arrays to store results.
+        $playerStatus = array();
+        foreach ($this->hands as $key => $hand) {
+            $playerStatus[$key] = array();
+        }
+
         foreach ($this->ruleQueue as $ruleInstance)
         {
-            $playerStatus = array();
             foreach ($this->hands as $key => $hand) {
-                $playerStatus[$key] = $ruleInstance->applies($hand);
+                if ($ruleInstance->applies($hand)) {
+                    array_push($playerStatus[$key], $ruleInstance->weight());
+                }
             }
 
-            $numberOfWinners = array_filter($playerStatus, function($status) {
-               return $status;
-            });
+            $winningRules = array();
+            foreach ($this->hands as $key => $hand) {
+                if (!empty($playerStatus[$key])) {
+                    // select highest winning rule
+                    $winningRules[$key] = max($playerStatus[$key]);
+                }
+            }
 
-            if (1 < $numberOfWinners) {
-                return $ruleInstance->resolve($this->hands[0], $this->hands[1]);
-            } elseif ($playerStatus[0]) {
-                return $this->hands[0];
-            } elseif ($this->hands[1]){
-                return $this->hands[1];
+            if (!empty($winningRules)) {
+                if (1 === count($winningRules)) {
+                    foreach ($winningRules as $key => $value) {
+                     return $this->hands[$key];
+                    }
+                } else {
+                    $selectedHandKey = null;
+                    $selectedHandValue = null;
+                    foreach ($this->hands as $key => $value) {
+                        if (null === $selectedHandKey) {
+                            $selectedHandKey = $key;
+                            $selectedHandValue = $value;
+                        } else {
+                            if ($selectedHandValue > $value) {
+                                return $this->hands[$key];
+                            } elseif ($selectedHandValue < $value) {
+                                return $this->hands[$selectedHandKey];
+                            } else {
+                                // They are equal
+                                return $this->ruleQueue[$value]->resolve($this->hands[0], $this->hands[1]);
+                            }
+                        }
+                    }
+                }
             }
         }
+        return null;
     }
 
     public function resetHands(): void
